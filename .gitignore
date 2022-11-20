@@ -1,3 +1,10 @@
+# My files ignored :
+.vscode
+artifact
+senror.egg-info
+build
+dist
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
