@@ -63,10 +63,10 @@ def save_object(file_path: str, obj: object) -> None:
         raise SensorException(e, sys) from e
 
 
-def load_object(file_path: str, ) -> object:
+def load_object(file_path: str) -> object:
     try:
         if not os.path.exists(file_path):
-            raise Exception(f"The file: {file_path} is not exists")
+            raise Exception(f"The file: {file_path} does not exist.")
         with open(file_path, "rb") as file_obj:
             return dill.load(file_obj)
     except Exception as e:
