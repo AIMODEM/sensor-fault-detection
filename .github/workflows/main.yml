@@ -32,7 +32,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
       - name: Install Utilities
         run: |
           sudo apt-get update
@@ -62,7 +61,6 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           
-          
   Continuous-Deployment:
     needs: build-and-push-ecr-image
     runs-on: self-hosted
@@ -81,13 +79,12 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
       
-      
       - name: Pull latest images
         run: |
          docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
-      - name: Stop and remove sensor container if running
-        run: |
-         docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
+#       - name: Stop and remove sensor container if running
+#         run: |
+#          docker ps -q --filter "name=sensor" | grep -q . && docker stop sensor && docker rm -fv sensor
        
       - name: Run Docker Image to serve users
         run: |
