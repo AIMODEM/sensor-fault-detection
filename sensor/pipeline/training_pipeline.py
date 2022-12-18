@@ -24,6 +24,7 @@ class TrainPipeline:
     is_pipeline_running = False
     def __init__(self):
         self.training_pipeline_config = TrainingPipelineConfig()
+        self.s3_sync = S3Sync()
         
     def start_data_ingestion(self)->DataIngestionArtifact:
         try:
@@ -115,7 +116,7 @@ class TrainPipeline:
         try:
             TrainPipeline.is_pipeline_running=True
             logging.info("Starting the pipeline...")
-            
+
             data_ingestion_artifact:DataIngestionArtifact = self.start_data_ingestion()
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
